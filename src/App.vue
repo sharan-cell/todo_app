@@ -1,15 +1,51 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="main-container">
+    <ToDo
+      :todoEntries="todoEntries"
+      @remove-todo="removeToDoItem"
+    />
+    <AddToDoButton @add-todo-event="addToDoItem"/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ToDo from './components/ToDo.vue'
+import AddToDoButton from './components/AddToDoButton.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ToDo,
+    AddToDoButton
+  },
+  data() {
+    return {
+      todoEntries: [
+        {
+          id: 1,
+          title: "Go to Groceries",
+          completed: false
+        },
+        {
+          id: 2,
+          title: "Work on integration",
+          completed: false
+        },
+        {
+          id: 3,
+          title: "Learn vue.js",
+          completed: false
+        }
+      ]
+    }
+  },
+  methods: {
+    addToDoItem(newToDoItem) {
+      this.todoEntries = [...this.todoEntries, newToDoItem];
+    },
+    removeToDoItem(todoId) {
+      this.todoEntries = this.todoEntries.filter(todo => todo.id !== todoId);
+    }
   }
 }
 </script>
